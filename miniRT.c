@@ -6,7 +6,7 @@
 /*   By: mryan <mryan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 11:56:39 by mryan             #+#    #+#             */
-/*   Updated: 2021/02/13 15:28:27 by mryan            ###   ########.fr       */
+/*   Updated: 2021/02/20 14:00:35 by mryan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,7 +294,7 @@ t_color		RayTrace(t_vector *camera_position, t_vector *direction, double t_min, 
 			closest_t = inter.t1;
 			closest_sphere = spheres[i];
 		}
-		if (t_min <+ inter.t2 && inter.t2 <= t_max && inter.t2 < closest_t)
+		if (t_min <= inter.t2 && inter.t2 <= t_max && inter.t2 < closest_t)
 		{
 			closest_t = inter.t2;
 			closest_sphere = spheres[i];
@@ -309,7 +309,8 @@ t_color		RayTrace(t_vector *camera_position, t_vector *direction, double t_min, 
 	tmp = sqrt(DotProduct(&normal, &normal));
 	normal = VectorInput(normal.x / tmp, normal.y / tmp, normal.z / tmp);
 	tmp = ComputeLightning(&sphere_point, &normal, a_light, light);
-	return (ColorInput(0, closest_sphere->color.r, closest_sphere->color.g, closest_sphere->color.b));
+	//return (ColorInput(0, closest_sphere->color.r, closest_sphere->color.g, closest_sphere->color.b));
+	return (closest_sphere->color);
 }
 
 void		RenderScene(t_data *img)
@@ -336,6 +337,7 @@ void		RenderScene(t_data *img)
 	big_sphere.center = VectorInput(0, - 5001, 0);
 	big_sphere.radius = 5000;
 	big_sphere.color = ColorInput(0, 255, 255, 0);
+	
 	a_light.intensity = 0.2;
 	a_light.color = ColorInput(0, 255, 255, 255);
 	light.intensity = 0.6;
